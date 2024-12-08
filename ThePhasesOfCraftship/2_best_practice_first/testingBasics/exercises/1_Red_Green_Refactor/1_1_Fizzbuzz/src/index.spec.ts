@@ -15,4 +15,8 @@ describe("fizzbuzz", () => {
   it('should return "Buzz" when passed multiples of 5', () => {
     expect(fizzbuzz(10)).toBe("Buzz");
   });
+
+  it ('should return "FizzBuzz" when passed 15', () => {
+    expect(fizzbuzz(15)).toBe("FizzBuzz");
+  })
 });

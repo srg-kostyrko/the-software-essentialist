@@ -28,11 +28,15 @@ describe("fizzbuzz", () => {
     expect(fizzbuzz(30)).toBe("FizzBuzz");
   });
 
-  it('should throw and error for numbers > 100', () => {
+  it('should throw an error for numbers > 100', () => {
     expect(() => fizzbuzz(101)).toThrowError(RangeError);
   });
 
-  it('should throw and error for numbers < 1', () => {
+  it('should throw an error for numbers < 1', () => {
     expect(() => fizzbuzz(-1)).toThrowError(RangeError);
+  });
+
+  it('should throw an error for non-numbers', () => {
+    expect(() => fizzbuzz("a" as any)).toThrowError(TypeError);
   })
 });

@@ -1,21 +1,31 @@
 import { fizzbuzz } from "./fizzbuzz";
 
 describe("fizzbuzz", () => {
-  it.each([
-    [1, "1"],
-    [3, "Fizz"],
-    [4, "4"],
-    [5, "Buzz"],
-    [6, "Fizz"],
-    [9, "Fizz"],
-    [10, "Buzz"],
-    [11, "11"],
-    [12, "Fizz"],
-    [13, "13"],
-    [15, "FizzBuzz"],
-    [30, "FizzBuzz"],
-  ])("for %s it should return `%s`", (input, expected) => {
-    expect(fizzbuzz(input)).toBe(expected);
+  describe("it should return Fizz for multiples of 3", () => {
+    it.each([3, 6, 9, 12])("for %s it should return `Fizz`", (input) => {
+      expect(fizzbuzz(input)).toBe("Fizz");
+    });
+  });
+
+  describe("it should return Buzz for multiples of 5", () => {
+    it.each([5, 10, 20, 25])("for %s it should return `Buzz`", (input) => {
+      expect(fizzbuzz(input)).toBe("Buzz");
+    });
+  });
+
+  describe("it should return FizzBuzz for multiples of 3 and 5", () => {
+    it.each([15, 30, 45])("for %s it should return `FizzBuzz`", (input) => {
+      expect(fizzbuzz(input)).toBe("FizzBuzz");
+    });
+  });
+
+  describe("it should return the number for non-multiples of 3 or 5", () => {
+    it.each([1, 2, 4, 7, 13])(
+      "for %s it should return `%s`",
+      (input) => {
+        expect(fizzbuzz(input)).toBe(String(input));
+      }
+    );
   });
 
   it("should throw an error for numbers > 100", () => {

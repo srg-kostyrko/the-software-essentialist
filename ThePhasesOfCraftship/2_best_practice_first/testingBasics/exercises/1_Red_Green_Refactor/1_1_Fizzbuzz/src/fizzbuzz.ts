@@ -1,4 +1,4 @@
 export function fizzbuzz(number: number): string {
-  if (number === 3) return "Fizz";
+  if (number % 3 === 0) return "Fizz";
   return "";
 }

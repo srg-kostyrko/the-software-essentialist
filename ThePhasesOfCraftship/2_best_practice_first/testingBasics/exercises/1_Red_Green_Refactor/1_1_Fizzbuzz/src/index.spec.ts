@@ -30,5 +30,9 @@ describe("fizzbuzz", () => {
 
   it('should throw and error for numbers > 100', () => {
     expect(() => fizzbuzz(101)).toThrowError(RangeError);
+  });
+
+  it('should throw and error for numbers < 1', () => {
+    expect(() => fizzbuzz(-1)).toThrowError(RangeError);
   })
 });

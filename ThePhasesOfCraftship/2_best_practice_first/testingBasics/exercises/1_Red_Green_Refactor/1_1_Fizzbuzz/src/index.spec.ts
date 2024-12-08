@@ -27,4 +27,8 @@ describe("fizzbuzz", () => {
   it('should return "FizzBuzz" when passed multiples of 3 and 5', () => {
     expect(fizzbuzz(30)).toBe("FizzBuzz");
   });
+
+  it('should throw and error for numbers > 100', () => {
+    expect(() => fizzbuzz(101)).toThrowError(RangeError);
+  })
 });

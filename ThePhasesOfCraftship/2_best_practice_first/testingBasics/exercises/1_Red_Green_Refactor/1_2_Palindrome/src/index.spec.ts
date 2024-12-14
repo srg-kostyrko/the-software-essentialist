@@ -1,15 +1,11 @@
 import { isPalindrome } from "./index";
 
 describe("palindrome checker", () => {
-  it("knows that 'mom' is a palindrome", () => {
-    expect(isPalindrome("mom")).toBe(true);
-  });
-
-  it("knows that 'Mom' is a palindrome", () => {
-    expect(isPalindrome("Mom")).toBe(true);
-  });
-
-  it("knows that 'Was It A Rat I Saw' is a palindrome", () => {
-    expect(isPalindrome("Was It A Rat I Saw")).toBe(true);
+  test.each([
+    ["mom", "is", true],
+    ["Mom", "is", true],
+    ["Was It A Rat I Saw", "is", true],
+  ])("knows that '%s' %s a palindrome", (input, _, expected) => {
+    expect(isPalindrome(input)).toBe(expected);
   });
 });

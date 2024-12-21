@@ -59,4 +59,16 @@ describe("password validator", () => {
       }
     });
   });
+
+  describe("validate contains at least one digit", () => {
+    it("knows that `aDabcd` is not valid", () => {
+      const result = validatePassword("aDabcd");
+
+      expect(result.valid).toBe(false);
+      if (!result.valid) {
+        expect(result.errors).toHaveLength(1);
+        expect(result.errors[0]).toBe(PasswordValidationErrors.ContainsNoDigits);
+      }
+    });
+  });
 });

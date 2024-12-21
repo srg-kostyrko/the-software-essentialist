@@ -70,5 +70,12 @@ describe("password validator", () => {
         expect(result.errors[0]).toBe(PasswordValidationErrors.ContainsNoDigits);
       }
     });
+
+    it("knows that `aD1234` is valid", () => {
+      const result = validatePassword("aD1234");
+
+      expect(result.valid).toBe(true);
+      expect("errors" in result).toBe(false);
+    });
   });
 });

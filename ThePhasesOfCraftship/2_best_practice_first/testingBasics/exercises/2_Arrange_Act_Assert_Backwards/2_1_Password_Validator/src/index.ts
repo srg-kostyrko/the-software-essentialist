@@ -8,8 +8,14 @@ export type ValidationResult =
     };
 
 export function validatePassword(password: string): ValidationResult {
+  if (password.length < 5) {
+    return {
+      valid: false,
+      errors: ["InvalidPasswordLength"],
+    };
+  }
+
   return {
-    valid: false,
-    errors: ["InvalidPasswordLength"],
-  };
+    valid: true,
+  }
 }

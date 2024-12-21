@@ -78,4 +78,17 @@ describe("password validator", () => {
       expect("errors" in result).toBe(false);
     });
   });
+
+  describe("validate contains at least one upper case letter", () => {
+    it("knows that `ad1234` is not valid", () => {
+      const result = validatePassword("ad1234");
+
+      expect(result.valid).toBe(false);
+      if (!result.valid) {
+        expect(result.errors).toHaveLength(1);
+        expect(result.errors[0]).toBe(PasswordValidationErrors.ContainsNoUppercaseLetters);
+      }
+    });
+
+  });
 });

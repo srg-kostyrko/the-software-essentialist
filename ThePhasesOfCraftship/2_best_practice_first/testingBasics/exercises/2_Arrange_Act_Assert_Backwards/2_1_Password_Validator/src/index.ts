@@ -10,6 +10,7 @@ export type ValidationResult =
 export enum PasswordValidationErrors {
   InvalidPasswordLength = "InvalidPasswordLength",
   ContainsNoDigits = "ContainsNoDigits",
+  ContainsNoUppercaseLetters = "ContainsNoUppercaseLetters",
 }
 
 export function validatePassword(password: string): ValidationResult {
@@ -24,6 +25,13 @@ export function validatePassword(password: string): ValidationResult {
     return {
       valid: false,
       errors: [PasswordValidationErrors.ContainsNoDigits],
+    };
+  }
+
+  if (!/[A-Z]/.test(password)) {
+    return {
+      valid: false,
+      errors: [PasswordValidationErrors.ContainsNoUppercaseLetters],
     };
   }
 

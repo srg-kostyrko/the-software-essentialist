@@ -24,7 +24,7 @@
  * function validatePassword(password: string): ValidationResult {}
  */
 
-import { validatePassword } from "./index";
+import { PasswordValidationErrors, validatePassword } from "./index";
 
 describe("password validator", () => {
   describe("validate length is between 5 and 15", () => {
@@ -34,7 +34,9 @@ describe("password validator", () => {
       expect(result.valid).toBe(false);
       if (!result.valid) {
         expect(result.errors).toHaveLength(1);
-        expect(result.errors[0]).toBe("InvalidPasswordLength");
+        expect(result.errors[0]).toBe(
+          PasswordValidationErrors.InvalidPasswordLength
+        );
       }
     });
 
@@ -51,8 +53,10 @@ describe("password validator", () => {
       expect(result.valid).toBe(false);
       if (!result.valid) {
         expect(result.errors).toHaveLength(1);
-        expect(result.errors[0]).toBe("InvalidPasswordLength");
+        expect(result.errors[0]).toBe(
+          PasswordValidationErrors.InvalidPasswordLength
+        );
       }
-    })
+    });
   });
 });

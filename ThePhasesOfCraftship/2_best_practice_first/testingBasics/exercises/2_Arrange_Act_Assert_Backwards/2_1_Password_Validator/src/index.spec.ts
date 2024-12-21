@@ -2,78 +2,84 @@ import { PasswordValidationErrors, validatePassword } from "./index";
 
 describe("password validator", () => {
   describe("validate length is between 5 and 15", () => {
-    it("knows that `aD2` is not valid", () => {
-      const result = validatePassword("aD2");
+    it.each([
+      ["aD2", "invalid", [PasswordValidationErrors.InvalidPasswordLength]],
+      ["aD2345", "valid", []],
+      [
+        "thePhysical1234567",
+        "invalid",
+        [PasswordValidationErrors.InvalidPasswordLength],
+      ],
+    ])(
+      "knows that `%s` is %s",
+      (
+        password: string,
+        _result: string,
+        expectedErrors: Array<PasswordValidationErrors>
+      ) => {
+        const result = validatePassword(password);
 
-      expect(result.valid).toBe(false);
-      if (!result.valid) {
-        expect(result.errors).toHaveLength(1);
-        expect(result.errors[0]).toBe(
-          PasswordValidationErrors.InvalidPasswordLength
-        );
+        expect(result.valid).toBe(expectedErrors.length === 0);
+        if (!result.valid) {
+          expect(result.errors).toHaveLength(expectedErrors.length);
+          expect(result.errors).toEqual(expectedErrors);
+        } else {
+          expect("errors" in result).toBe(false);
+        }
       }
-    });
-
-    it("knows that `aD2345` is valid", () => {
-      const result = validatePassword("aD2345");
-
-      expect(result.valid).toBe(true);
-      expect("errors" in result).toBe(false);
-    });
-
-    it("knows that `thePhysical1234567` is not valid", () => {
-      const result = validatePassword("thePhysical1234567");
-
-      expect(result.valid).toBe(false);
-      if (!result.valid) {
-        expect(result.errors).toHaveLength(1);
-        expect(result.errors[0]).toBe(
-          PasswordValidationErrors.InvalidPasswordLength
-        );
-      }
-    });
+    );
   });
 
   describe("validate contains at least one digit", () => {
-    it("knows that `maxwellTheBe` is not valid", () => {
-      const result = validatePassword("maxwellTheBe");
+    it.each([
+      ["maxwellTheBe", "invalid", [PasswordValidationErrors.ContainsNoDigits]],
+      ["aD1234", "valid", []],
+    ])(
+      "knows that `%s` is %s",
+      (
+        password: string,
+        _result: string,
+        expectedErrors: Array<PasswordValidationErrors>
+      ) => {
+        const result = validatePassword(password);
 
-      expect(result.valid).toBe(false);
-      if (!result.valid) {
-        expect(result.errors).toHaveLength(1);
-        expect(result.errors[0]).toBe(
-          PasswordValidationErrors.ContainsNoDigits
-        );
+        expect(result.valid).toBe(expectedErrors.length === 0);
+        if (!result.valid) {
+          expect(result.errors).toHaveLength(expectedErrors.length);
+          expect(result.errors).toEqual(expectedErrors);
+        } else {
+          expect("errors" in result).toBe(false);
+        }
       }
-    });
-
-    it("knows that `aD1234` is valid", () => {
-      const result = validatePassword("aD1234");
-
-      expect(result.valid).toBe(true);
-      expect("errors" in result).toBe(false);
-    });
+    );
   });
 
   describe("validate contains at least one upper case letter", () => {
-    it("knows that `maxwell1_c` is not valid", () => {
-      const result = validatePassword("maxwell1_c");
+    it.each([
+      [
+        "maxwell1_c",
+        "invalid",
+        [PasswordValidationErrors.ContainsNoUppercaseLetters],
+      ],
+      ["AD1234", "valid", []],
+    ])(
+      "knows that `%s` is %s",
+      (
+        password: string,
+        _result: string,
+        expectedErrors: Array<PasswordValidationErrors>
+      ) => {
+        const result = validatePassword(password);
 
-      expect(result.valid).toBe(false);
-      if (!result.valid) {
-        expect(result.errors).toHaveLength(1);
-        expect(result.errors[0]).toBe(
-          PasswordValidationErrors.ContainsNoUppercaseLetters
-        );
+        expect(result.valid).toBe(expectedErrors.length === 0);
+        if (!result.valid) {
+          expect(result.errors).toHaveLength(expectedErrors.length);
+          expect(result.errors).toEqual(expectedErrors);
+        } else {
+          expect("errors" in result).toBe(false);
+        }
       }
-    });
-
-    it("knows that `AD1234` is valid", () => {
-      const result = validatePassword("AD1234");
-
-      expect(result.valid).toBe(true);
-      expect("errors" in result).toBe(false);
-    });
+    );
   });
 
   describe("returns all errors", () => {
@@ -86,7 +92,9 @@ describe("password validator", () => {
         expect(result.errors).toContain(
           PasswordValidationErrors.InvalidPasswordLength
         );
-        expect(result.errors).toContain(PasswordValidationErrors.ContainsNoDigits);
+        expect(result.errors).toContain(
+          PasswordValidationErrors.ContainsNoDigits
+        );
         expect(result.errors).toContain(
           PasswordValidationErrors.ContainsNoUppercaseLetters
         );

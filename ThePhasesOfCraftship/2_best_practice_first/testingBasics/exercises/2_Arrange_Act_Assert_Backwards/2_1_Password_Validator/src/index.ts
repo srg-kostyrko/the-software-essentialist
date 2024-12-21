@@ -4,7 +4,7 @@ export type ValidationResult =
     }
   | {
       valid: false;
-      errors: Array<string>;
+      errors: Array<PasswordValidationErrors>;
     };
 
 export enum PasswordValidationErrors {
@@ -14,24 +14,23 @@ export enum PasswordValidationErrors {
 }
 
 export function validatePassword(password: string): ValidationResult {
+  const errors: Array<PasswordValidationErrors> = [];
   if (password.length < 5 || password.length > 15) {
-    return {
-      valid: false,
-      errors: [PasswordValidationErrors.InvalidPasswordLength],
-    };
+    errors.push(PasswordValidationErrors.InvalidPasswordLength);
   }
 
   if (!/[0-9]/.test(password)) {
-    return {
-      valid: false,
-      errors: [PasswordValidationErrors.ContainsNoDigits],
-    };
+    errors.push(PasswordValidationErrors.ContainsNoDigits);
   }
 
   if (!/[A-Z]/.test(password)) {
+    errors.push(PasswordValidationErrors.ContainsNoUppercaseLetters);
+  }
+
+  if (errors.length > 0) {
     return {
       valid: false,
-      errors: [PasswordValidationErrors.ContainsNoUppercaseLetters],
+      errors,
     };
   }
 

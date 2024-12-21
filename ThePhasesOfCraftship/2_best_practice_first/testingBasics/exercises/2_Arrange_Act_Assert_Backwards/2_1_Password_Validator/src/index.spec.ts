@@ -101,4 +101,22 @@ describe("password validator", () => {
       expect("errors" in result).toBe(false);
     });
   });
+
+  describe("returns all errors", () => {
+    it("knows that `a` is not valid", () => {
+      const result = validatePassword("a");
+
+      expect(result.valid).toBe(false);
+      if (!result.valid) {
+        expect(result.errors).toHaveLength(3);
+        expect(result.errors).toContain(
+          PasswordValidationErrors.InvalidPasswordLength
+        );
+        expect(result.errors).toContain(PasswordValidationErrors.ContainsNoDigits);
+        expect(result.errors).toContain(
+          PasswordValidationErrors.ContainsNoUppercaseLetters
+        );
+      }
+    });
+  });
 });

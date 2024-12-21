@@ -11,10 +11,10 @@
  * Contains at least one upper case letter
  * - "ad1234" - not valid
  * - "AD1234" - valid
- * Return an object containing a boolean result and an errors key that — 
- * when provided with an invalid password — contains an error message or type for all errors in occurrence. 
+ * Return an object containing a boolean result and an errors key that —
+ * when provided with an invalid password — contains an error message or type for all errors in occurrence.
  * There can be multiple errors at a single time.
- * 
+ *
  * type ValidationResult = {
  *    valid: true;
  * } | {
@@ -24,11 +24,18 @@
  * function validatePassword(password: string): ValidationResult {}
  */
 
-describe('password validator', () => {
+import { validatePassword } from "./index";
 
-  test('hello', () => {
-    expect("between 5 and 15").toContain('5 and 15')
-  })
-})
+describe("password validator", () => {
+  describe("validate length is between 5 and 15", () => {
+    it("knows that `aD2` is not valid", () => {
+      const result = validatePassword("aD2");
 
-
+      expect(result.valid).toBe(false);
+      if (!result.valid) {
+        expect(result.errors).toHaveLength(1);
+        expect(result.errors[0]).toBe("InvalidPasswordLength");
+      }
+    });
+  });
+});

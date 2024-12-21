@@ -67,7 +67,9 @@ describe("password validator", () => {
       expect(result.valid).toBe(false);
       if (!result.valid) {
         expect(result.errors).toHaveLength(1);
-        expect(result.errors[0]).toBe(PasswordValidationErrors.ContainsNoDigits);
+        expect(result.errors[0]).toBe(
+          PasswordValidationErrors.ContainsNoDigits
+        );
       }
     });
 
@@ -86,9 +88,17 @@ describe("password validator", () => {
       expect(result.valid).toBe(false);
       if (!result.valid) {
         expect(result.errors).toHaveLength(1);
-        expect(result.errors[0]).toBe(PasswordValidationErrors.ContainsNoUppercaseLetters);
+        expect(result.errors[0]).toBe(
+          PasswordValidationErrors.ContainsNoUppercaseLetters
+        );
       }
     });
 
+    it("knows that `AD1234` is valid", () => {
+      const result = validatePassword("AD1234");
+
+      expect(result.valid).toBe(true);
+      expect("errors" in result).toBe(false);
+    });
   });
 });

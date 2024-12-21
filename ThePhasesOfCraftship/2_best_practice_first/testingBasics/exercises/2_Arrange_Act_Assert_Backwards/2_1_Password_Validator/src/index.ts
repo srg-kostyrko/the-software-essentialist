@@ -13,18 +13,18 @@ export enum PasswordValidationErrors {
   ContainsNoUppercaseLetters = "ContainsNoUppercaseLetters",
 }
 
+const validators: Record<PasswordValidationErrors, (password: string) => boolean> = {
+  [PasswordValidationErrors.InvalidPasswordLength]: (password) => password.length < 5 || password.length > 15,
+  [PasswordValidationErrors.ContainsNoDigits]: (password) => !/[0-9]/.test(password),
+  [PasswordValidationErrors.ContainsNoUppercaseLetters]: (password) => !/[A-Z]/.test(password),
+}
+
 export function validatePassword(password: string): ValidationResult {
   const errors: Array<PasswordValidationErrors> = [];
-  if (password.length < 5 || password.length > 15) {
-    errors.push(PasswordValidationErrors.InvalidPasswordLength);
-  }
-
-  if (!/[0-9]/.test(password)) {
-    errors.push(PasswordValidationErrors.ContainsNoDigits);
-  }
-
-  if (!/[A-Z]/.test(password)) {
-    errors.push(PasswordValidationErrors.ContainsNoUppercaseLetters);
+  for (const [error, validator] of Object.entries(validators)) {
+    if (validator(password)) {
+      errors.push(error as PasswordValidationErrors);
+    }
   }
 
   if (errors.length > 0) {

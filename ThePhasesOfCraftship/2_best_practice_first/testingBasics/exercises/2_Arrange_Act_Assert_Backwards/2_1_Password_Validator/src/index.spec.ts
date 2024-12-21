@@ -13,13 +13,16 @@ function runPasswordValidationTests(
       const result = validatePassword(password);
 
       expect(result.valid).toBe(expectedErrors.length === 0);
+      if (expectedErrors.length === 0) {
+        expect(result).not.toHaveProperty("errors");
+      } else {
+        expect(result).toHaveProperty("errors");
+      }
       if (!result.valid) {
         expect(result.errors).toHaveLength(expectedErrors.length);
         for (const expectedError of expectedErrors) {
           expect(result.errors).toContain(expectedError);
         }
-      } else {
-        expect("errors" in result).toBe(false);
       }
     }
   );

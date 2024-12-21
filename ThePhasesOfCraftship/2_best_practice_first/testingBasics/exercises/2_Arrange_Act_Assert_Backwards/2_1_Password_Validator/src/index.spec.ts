@@ -47,8 +47,8 @@ describe("password validator", () => {
       expect("errors" in result).toBe(false);
     });
 
-    it("knows that `aD23456789123456` is not valid", () => {
-      const result = validatePassword("aD23456789123456");
+    it("knows that `thePhysical1234567` is not valid", () => {
+      const result = validatePassword("thePhysical1234567");
 
       expect(result.valid).toBe(false);
       if (!result.valid) {
@@ -61,8 +61,8 @@ describe("password validator", () => {
   });
 
   describe("validate contains at least one digit", () => {
-    it("knows that `aDabcd` is not valid", () => {
-      const result = validatePassword("aDabcd");
+    it("knows that `maxwellTheBe` is not valid", () => {
+      const result = validatePassword("maxwellTheBe");
 
       expect(result.valid).toBe(false);
       if (!result.valid) {
@@ -82,8 +82,8 @@ describe("password validator", () => {
   });
 
   describe("validate contains at least one upper case letter", () => {
-    it("knows that `ad1234` is not valid", () => {
-      const result = validatePassword("ad1234");
+    it("knows that `maxwell1_c` is not valid", () => {
+      const result = validatePassword("maxwell1_c");
 
       expect(result.valid).toBe(false);
       if (!result.valid) {

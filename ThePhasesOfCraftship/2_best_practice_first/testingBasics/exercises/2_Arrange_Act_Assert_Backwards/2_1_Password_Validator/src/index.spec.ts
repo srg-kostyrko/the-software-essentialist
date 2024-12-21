@@ -15,7 +15,9 @@ function runPasswordValidationTests(
       expect(result.valid).toBe(expectedErrors.length === 0);
       if (!result.valid) {
         expect(result.errors).toHaveLength(expectedErrors.length);
-        expect(result.errors).toEqual(expectedErrors);
+        for (const expectedError of expectedErrors) {
+          expect(result.errors).toContain(expectedError);
+        }
       } else {
         expect("errors" in result).toBe(false);
       }
@@ -55,22 +57,24 @@ describe("password validator", () => {
   });
 
   describe("returns all errors", () => {
-    it("knows that `a` is not valid", () => {
-      const result = validatePassword("a");
-
-      expect(result.valid).toBe(false);
-      if (!result.valid) {
-        expect(result.errors).toHaveLength(3);
-        expect(result.errors).toContain(
-          PasswordValidationErrors.InvalidPasswordLength
-        );
-        expect(result.errors).toContain(
-          PasswordValidationErrors.ContainsNoDigits
-        );
-        expect(result.errors).toContain(
-          PasswordValidationErrors.ContainsNoUppercaseLetters
-        );
-      }
-    });
+    runPasswordValidationTests([
+      [
+        "a",
+        "invalid",
+        [
+          PasswordValidationErrors.InvalidPasswordLength,
+          PasswordValidationErrors.ContainsNoDigits,
+          PasswordValidationErrors.ContainsNoUppercaseLetters,
+        ],
+      ],
+      [
+        "thephysical1234567",
+        "invalid",
+        [
+          PasswordValidationErrors.ContainsNoUppercaseLetters,
+          PasswordValidationErrors.InvalidPasswordLength,
+        ],
+      ],
+    ]);
   });
 });

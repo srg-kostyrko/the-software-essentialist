@@ -8,7 +8,7 @@ export type ValidationResult =
     };
 
 export function validatePassword(password: string): ValidationResult {
-  if (password.length < 5) {
+  if (password.length < 5 || password.length > 15) {
     return {
       valid: false,
       errors: ["InvalidPasswordLength"],

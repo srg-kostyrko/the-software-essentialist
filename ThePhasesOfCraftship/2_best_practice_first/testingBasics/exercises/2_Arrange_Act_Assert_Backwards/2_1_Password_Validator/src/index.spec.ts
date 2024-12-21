@@ -44,5 +44,15 @@ describe("password validator", () => {
       expect(result.valid).toBe(true);
       expect("errors" in result).toBe(false);
     });
+
+    it("knows that `aD23456789123456` is not valid", () => {
+      const result = validatePassword("aD23456789123456");
+
+      expect(result.valid).toBe(false);
+      if (!result.valid) {
+        expect(result.errors).toHaveLength(1);
+        expect(result.errors[0]).toBe("InvalidPasswordLength");
+      }
+    })
   });
 });

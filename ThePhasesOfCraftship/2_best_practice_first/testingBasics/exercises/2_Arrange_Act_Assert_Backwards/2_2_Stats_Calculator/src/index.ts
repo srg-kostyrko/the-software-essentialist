@@ -7,7 +7,7 @@ interface SequenceStats {
 
 export function calcualteSequenceStats(input: number[]): SequenceStats {
   return {
-    min: -Infinity,
+    min: 0,
     max: Infinity,
     size: -1,
     avg: Infinity,

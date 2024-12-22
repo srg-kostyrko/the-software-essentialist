@@ -9,4 +9,10 @@ describe("stats calculator", () => {
     expect(result).toHaveProperty("size");
     expect(result).toHaveProperty("avg");
   });
+
+  describe("min calculation", () => {
+    it("knows that min of empty sequence is 0", () => {
+      expect(calcualteSequenceStats([]).min).toBe(0);
+    });
+  });
 });

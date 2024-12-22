@@ -21,7 +21,7 @@ Process a sequence of integer numbers to determine the following statistics
   - [2] -> 2
   - [1, 2, 3] -> 2
   - [-1, 0, 1] -> 0
-  - [-5, 2, 4, 1] -> 0.25
+  - [-5, 2, 4, 1] -> 0.5
 
 ```ts
 interface SequenceStats {

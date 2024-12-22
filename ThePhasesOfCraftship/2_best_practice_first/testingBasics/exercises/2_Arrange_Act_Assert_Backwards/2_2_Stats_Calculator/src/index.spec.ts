@@ -44,4 +44,16 @@ describe("stats calculator", () => {
       expect(calcualteSequenceStats(input).size).toBe(expected);
     });
   });
+
+  describe("avg calculation", () => {
+    it.each([
+      [[], 0],
+      [[2], 2],
+      [[1, 2, 3], 2],
+      [[-1, 0, 1], 0],
+      [[-5, 2, 4, 1], 0.5],
+    ])("knows that avg of %s is %s", (input: number[], expected: number) => {
+      expect(calcualteSequenceStats(input).avg).toBe(expected);
+    });
+  });
 });

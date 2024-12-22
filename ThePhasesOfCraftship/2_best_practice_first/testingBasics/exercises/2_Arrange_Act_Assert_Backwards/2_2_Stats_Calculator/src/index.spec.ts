@@ -22,5 +22,9 @@ describe("stats calculator", () => {
     it("knows that min of positive number sequence with 0 is 0", () => {
       expect(calcualteSequenceStats([2, 1, 0, 5]).min).toBe(0);
     });
+
+    it("knows that min of negative number sequence is lowest number", () => {
+      expect(calcualteSequenceStats([-2, -1, -5]).min).toBe(-5);
+    });
   });
 });

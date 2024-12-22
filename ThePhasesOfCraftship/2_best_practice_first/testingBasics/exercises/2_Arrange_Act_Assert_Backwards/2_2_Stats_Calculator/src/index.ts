@@ -6,6 +6,8 @@ interface SequenceStats {
 }
 
 export function calcualteSequenceStats(input: number[]): SequenceStats {
+  const size = input.length;
+
   let min = Infinity;
   let max = -Infinity;
   let sum = 0;
@@ -16,9 +18,9 @@ export function calcualteSequenceStats(input: number[]): SequenceStats {
   }
 
   return {
-    min: input.length > 0 ? min : 0,
-    max: input.length > 0 ? max : 0,
+    min: size > 0 ? min : 0,
+    max: size > 0 ? max : 0,
     size: input.length,
-    avg: input.length > 0 ? sum / input.length : 0,
+    avg: size > 0 ? sum / size : 0,
   };
 }

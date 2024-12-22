@@ -6,8 +6,13 @@ interface SequenceStats {
 }
 
 export function calcualteSequenceStats(input: number[]): SequenceStats {
+  let min = Infinity;
+  for (let num of input) {
+    if (num < min) min = num;
+  }
+
   return {
-    min: 0,
+    min: input.length > 0 ? min : 0,
     max: Infinity,
     size: -1,
     avg: Infinity,

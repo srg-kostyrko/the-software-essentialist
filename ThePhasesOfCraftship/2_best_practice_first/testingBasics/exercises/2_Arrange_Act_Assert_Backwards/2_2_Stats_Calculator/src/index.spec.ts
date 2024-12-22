@@ -14,5 +14,9 @@ describe("stats calculator", () => {
     it("knows that min of empty sequence is 0", () => {
       expect(calcualteSequenceStats([]).min).toBe(0);
     });
+
+    it("knwos that min of positive number sequence is lowest number", () => {
+      expect(calcualteSequenceStats([2, 1, 5]).min).toBe(1);
+    })
   });
 });

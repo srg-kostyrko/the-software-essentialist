@@ -32,4 +32,16 @@ describe("stats calculator", () => {
       expect(calcualteSequenceStats(input).max).toBe(expected);
     });
   });
+
+  describe("size calculation", () => {
+    it.each([
+      [[], 0],
+      [[-1, 2, 0, 5, 1], 5],
+      [[-1, 0, -4], 3],
+      [[-2, -3, -5], 3],
+      [[2, 5, 2], 3],
+    ])("knows that size of %s is %s", (input: number[], expected: number) => {
+      expect(calcualteSequenceStats(input).size).toBe(expected);
+    });
+  });
 });

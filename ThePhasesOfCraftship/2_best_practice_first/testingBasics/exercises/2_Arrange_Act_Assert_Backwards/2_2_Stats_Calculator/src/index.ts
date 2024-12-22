@@ -16,7 +16,7 @@ export function calcualteSequenceStats(input: number[]): SequenceStats {
   return {
     min: input.length > 0 ? min : 0,
     max: input.length > 0 ? max : 0,
-    size: -1,
+    size: input.length,
     avg: Infinity,
   };
 }

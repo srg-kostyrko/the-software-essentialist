@@ -8,5 +8,6 @@ export function validateMilitaryTime(time: string): boolean {
   if (fromHours.length < 2) return false;
   if (fromMinutes.length < 2) return false;
   if (!to) return false;
+  if (!to.includes(":")) return false;
   return true;
 }

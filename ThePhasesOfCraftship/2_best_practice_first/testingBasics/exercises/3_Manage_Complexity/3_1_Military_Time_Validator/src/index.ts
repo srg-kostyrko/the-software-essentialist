@@ -13,13 +13,15 @@ function validateTimePart(timePart: string): boolean {
   const [hoursString, minutesString] = timePart
     .split(":")
     .map((part) => part.trim());
-  if (hoursString.length < 2) return false;
-  const hours = parseInt(hoursString, 10);
-  if (!Number.isInteger(hours)) return false;
-  if (hours < 0 || hours > 23) return false;
-  if (minutesString.length < 2) return false;
-  const minutes = parseInt(minutesString, 10);
-  if (!Number.isInteger(minutes)) return false;
-  if (minutes < 0 || minutes > 59) return false;
+  return (
+    validateNumberPart(hoursString, 23) && validateNumberPart(minutesString, 59)
+  );
+}
+
+function validateNumberPart(numberPart: string, limit: number): boolean {
+  if (numberPart.length < 2) return false;
+  const num = parseInt(numberPart, 10);
+  if (!Number.isInteger(num)) return false;
+  if (num < 0 || num > limit) return false;
   return true;
 }

@@ -19,7 +19,7 @@ function validateTimePart(timePart: string): boolean {
 }
 
 function validateNumberPart(numberPart: string, limit: number): boolean {
-  if (numberPart.length < 2) return false;
+  if (numberPart.length !== 2) return false;
   const num = parseInt(numberPart, 10);
   if (!Number.isInteger(num)) return false;
   if (num < 0 || num > limit) return false;

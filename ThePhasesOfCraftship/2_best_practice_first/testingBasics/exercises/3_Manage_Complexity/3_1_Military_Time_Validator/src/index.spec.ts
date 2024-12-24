@@ -28,6 +28,10 @@ describe("military time validator", () => {
     ${"01:12 - bb:32"} | ${"end hour is not a number"}
     ${"01:aa - 14:32"} | ${"start minutes is not a number"}
     ${"01:12 - 14:bb"} | ${"end minutes is not a number"}
+    ${"000:23 - 23:12"} | ${"start hour has more than 2 chars"}
+    ${"00:000 - 23:12"} | ${"start minutes has more than 2 chars"}
+    ${"00:23 - 000:00"} | ${"end hour has more than 2 chars"}
+    ${"00:23 - 23:000"} | ${"end minutes has more than 2 chars"}
   `("knows that `$time` is invalid because of $reason", ({ time }) => {
     expect(validateMilitaryTime(time)).toBeFalsy();
   });

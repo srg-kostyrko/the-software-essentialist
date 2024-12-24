@@ -9,5 +9,8 @@ export function validateMilitaryTime(time: string): boolean {
   if (fromMinutes.length < 2) return false;
   if (!to) return false;
   if (!to.includes(":")) return false;
+  const [toHours, toMinutes] = to.split(":").map(part => part.trim());
+  if (toHours.length < 2) return false;
+  if (toMinutes.length < 2) return false;
   return true;
 }

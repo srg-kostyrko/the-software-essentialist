@@ -14,6 +14,8 @@ function validateTimePart(timePart: string): boolean {
     .split(":")
     .map((part) => part.trim());
   if (hoursString.length < 2) return false;
+  const hours = parseInt(hoursString, 10);
+  if (hours < 0 || hours > 23) return false;
   if (minutesString.length < 2) return false;
   return true;
 }

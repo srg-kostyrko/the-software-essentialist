@@ -6,6 +6,7 @@ export function validateMilitaryTime(time: string): boolean {
   if (!from.includes(":")) return false;
   const [fromHours, fromMinutes] = from.split(":").map(part => part.trim());
   if (fromHours.length < 2) return false;
+  if (fromMinutes.length < 2) return false;
   if (!to) return false;
   return true;
 }

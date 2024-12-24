@@ -19,6 +19,8 @@ describe("military time validator", () => {
     ${"01:12 - 14:60"} | ${"end minutes is out of range"}
     ${"aa:12 - 14:32"} | ${"start hour is not a number"}
     ${"01:12 - bb:32"} | ${"end hour is not a number"}
+    ${"01:aa - 14:32"} | ${"start minutes is not a number"}
+    ${"01:12 - 14:bb"} | ${"end minutes is not a number"}
   `("knows that `$time` is invalid because of $reason", ({ time }) => {
     expect(validateMilitaryTime(time)).toBeFalsy();
   });

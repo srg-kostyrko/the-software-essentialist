@@ -15,6 +15,7 @@ function validateTimePart(timePart: string): boolean {
     .map((part) => part.trim());
   if (hoursString.length < 2) return false;
   const hours = parseInt(hoursString, 10);
+  if (!Number.isInteger(hours)) return false;
   if (hours < 0 || hours > 23) return false;
   if (minutesString.length < 2) return false;
   const minutes = parseInt(minutesString, 10);

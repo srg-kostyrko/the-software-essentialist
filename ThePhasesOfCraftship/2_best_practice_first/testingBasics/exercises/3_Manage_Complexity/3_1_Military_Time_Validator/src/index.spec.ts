@@ -8,6 +8,7 @@ describe("military time validator", () => {
     ${"- 14:32"}     | ${"missing start time"}
     ${"01:12 -"}     | ${"missing end time"}
     ${"0112 - 14:32"} | ${"missing separator in start time"}
+    ${"1:12 - 14:32"} | ${"missing leading zero in start time"}
   `("knows that `$time` is invalid because of $reason", ({ time }) => {
     expect(validateMilitaryTime(time)).toBeFalsy();
   });

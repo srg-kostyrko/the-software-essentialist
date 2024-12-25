@@ -4,7 +4,7 @@ Create a boolean calculator that takes a boolean expression (as a string) and ev
 
 1. Single values
    - "TRUE" -> true
-   - "FALSE" -> true
+   - "FALSE" -> false
 2. NOT operator
    - "NOT TRUE" -> false
    - "NOT FALSE" -> true

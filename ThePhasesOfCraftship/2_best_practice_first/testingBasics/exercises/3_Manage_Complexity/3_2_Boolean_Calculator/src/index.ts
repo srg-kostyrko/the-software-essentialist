@@ -1,40 +1,57 @@
 function resolveLiteral(input: string): boolean {
   return input === "TRUE";
 }
-function valueToLiteral(input: boolean): string {
-  return input ? "TRUE" : "FALSE";
+
+function resolveNotOperator(tokens: string[]): string[] {
+  const result = [];
+  for (let i = 0; i < tokens.length; i++) {
+    if (tokens[i] === "NOT") {
+      result.push(tokens[i + 1] === "TRUE" ? "FALSE" : "TRUE");
+      i++;
+    } else {
+      result.push(tokens[i]);
+    }
+  }
+  return result;
 }
-function isOperator(input: string): boolean {
-  return input === "NOT" || input === "AND" || input === "OR";
+
+function resolveOrOperator(tokens: string[]): string[] {
+  const result: string[] = [];
+  for (let i = 0; i < tokens.length; i++) {
+    if (tokens[i] === "OR") {
+      const left = result.pop();
+      result.push(
+        left === "TRUE" || tokens[i + 1] === "TRUE" ? "TRUE" : "FALSE"
+      );
+      i++;
+    } else {
+      result.push(tokens[i]);
+    }
+  }
+  return result;
 }
-function isLiteral(input: string): boolean {
-  return input === "TRUE" || input === "FALSE";
+
+function resolveAndOperator(tokens: string[]): string[] {
+  const result: string[] = [];
+  for (let i = 0; i < tokens.length; i++) {
+    if (tokens[i] === "AND") {
+      const left = result.pop();
+      result.push(
+        left === "TRUE" && tokens[i + 1] === "TRUE" ? "TRUE" : "FALSE"
+      );
+      i++;
+    } else {
+      result.push(tokens[i]);
+    }
+  }
+  return result;
 }
 
 export function resolveBooleanExpression(input: string): boolean {
   const tokens = input.split(" ");
-  const stack: string[] = [];
-  for (const token of tokens) {
-    if (isOperator(token)) {
-      stack.push(token);
-    } else if (isLiteral(token)) {
-      if (stack.length > 0 && isOperator(stack.at(-1)!)) {
-        const op = stack.pop();
-        if (op === "NOT") {
-          stack.push(valueToLiteral(!resolveLiteral(token)));
-        } else {
-          const left = stack.pop();
-          const right = token;
-          stack.push(
-            op === "AND"
-              ? valueToLiteral(resolveLiteral(left!) && resolveLiteral(right))
-              : valueToLiteral(resolveLiteral(left!) || resolveLiteral(right))
-          );
-        }
-      } else {
-        stack.push(token);
-      }
-    }
-  }
-  return resolveLiteral(stack[0]);
+  const withNotResolved = resolveNotOperator(tokens);
+  const withOrResolved = resolveOrOperator(withNotResolved);
+  const withAndResolved = resolveAndOperator(withOrResolved);
+
+  return resolveLiteral(withAndResolved[0]);
 }

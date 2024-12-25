@@ -5,7 +5,7 @@ describe("boolean calculator", () => {
     it.each([
       ["TRUE", true],
       ["FALSE", false],
-    ])("knows that $s resolves to $s", (expression, result) => {
+    ])("knows that %s resolves to %s", (expression, result) => {
       expect(resolveBooleanExpression(expression)).toBe(result);
     });
   });
@@ -14,7 +14,7 @@ describe("boolean calculator", () => {
     it.each([
       ["NOT TRUE", false],
       ["NOT FALSE", true],
-    ])("knows that $s resolves to $s", (expression, result) => {
+    ])("knows that %s resolves to %s", (expression, result) => {
       expect(resolveBooleanExpression(expression)).toBe(result);
     });
   });
@@ -25,7 +25,7 @@ describe("boolean calculator", () => {
       ["TRUE AND FALSE", false],
       ["FALSE AND TRUE", false],
       ["FALSE AND FALSE", false],
-    ])("knows that $s resolves to $s", (expression, result) => {
+    ])("knows that %s resolves to %s", (expression, result) => {
       expect(resolveBooleanExpression(expression)).toBe(result);
     });
   });
@@ -36,7 +36,18 @@ describe("boolean calculator", () => {
       ["TRUE OR FALSE", true],
       ["FALSE OR TRUE", true],
       ["FALSE OR FALSE", false],
-    ])("knows that $s resolves to $s", (expression, result) => {
+    ])("knows that %s resolves to %s", (expression, result) => {
+      expect(resolveBooleanExpression(expression)).toBe(result);
+    });
+  });
+
+  describe("operators w/ precedence (NOT -> AND -> OR)", () => {
+    it.each([
+      ["TRUE AND NOT FALSE", true],
+      ["FALSE OR NOT FALSE", true],
+      ["TRUE OR TRUE AND FALSE", false],
+      ["TRUE OR FALSE AND NOT FALSE", true],
+    ])("knows that %s resolves to %s", (expression, result) => {
       expect(resolveBooleanExpression(expression)).toBe(result);
     });
   });

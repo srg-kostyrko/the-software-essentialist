@@ -18,4 +18,15 @@ describe("boolean calculator", () => {
       expect(resolveBooleanExpression(expression)).toBe(result);
     });
   });
+
+  describe("AND operator", () => {
+    it.each([
+      ["TRUE AND TRUE", true],
+      ["TRUE AND FALSE", false],
+      ["FALSE AND TRUE", false],
+      ["FALSE AND FALSE", false],
+    ])("knows that $s resolves to $s", (expression, result) => {
+      expect(resolveBooleanExpression(expression)).toBe(result);
+    });
+  });
 });

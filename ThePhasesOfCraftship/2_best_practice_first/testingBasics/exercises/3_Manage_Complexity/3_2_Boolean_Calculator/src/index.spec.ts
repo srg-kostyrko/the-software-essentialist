@@ -29,4 +29,15 @@ describe("boolean calculator", () => {
       expect(resolveBooleanExpression(expression)).toBe(result);
     });
   });
+
+  describe("OR operator", () => {
+    it.each([
+      ["TRUE OR TRUE", true],
+      ["TRUE OR FALSE", true],
+      ["FALSE OR TRUE", true],
+      ["FALSE OR FALSE", false],
+    ])("knows that $s resolves to $s", (expression, result) => {
+      expect(resolveBooleanExpression(expression)).toBe(result);
+    });
+  });
 });

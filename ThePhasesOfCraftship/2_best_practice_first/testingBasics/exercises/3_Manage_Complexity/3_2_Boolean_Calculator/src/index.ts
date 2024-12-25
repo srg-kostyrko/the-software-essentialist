@@ -5,6 +5,11 @@ export function resolveBooleanExpression(input: string): boolean {
       resolveBooleanExpression(tokens[0]) && resolveBooleanExpression(tokens[2])
     );
   }
+  if (tokens.length === 3 && tokens[1] === "OR") {
+    return (
+      resolveBooleanExpression(tokens[0]) || resolveBooleanExpression(tokens[2])
+    );
+  }
   if (tokens[0] === "NOT") {
     return !resolveBooleanExpression(tokens[1]);
   }

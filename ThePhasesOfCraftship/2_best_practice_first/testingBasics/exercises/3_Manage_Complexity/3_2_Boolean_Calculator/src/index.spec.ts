@@ -64,10 +64,13 @@ describe("boolean calculator", () => {
   });
 
   describe("errors", () => {
-    it.each(["NOT"])("knows that %s throws an error", (expression) => {
-      expect(() => {
-        resolveBooleanExpression(expression);
-      }).toThrow("Unexpected end of expression");
-    });
+    it.each(["NOT", "TRUE AND", "AND TRUE"])(
+      "knows that %s throws an error",
+      (expression) => {
+        expect(() => {
+          resolveBooleanExpression(expression);
+        }).toThrow("Unexpected end of expression");
+      }
+    );
   });
 });

@@ -85,6 +85,9 @@ function resolveAndOperator(tokens: string[]): string[] {
   for (let i = 0; i < tokens.length; i++) {
     if (tokens[i] === "AND") {
       const left = result.pop();
+      if (!left || i === tokens.length - 1) {
+        throw new SyntaxError("Unexpected end of expression");
+      }
       result.push(
         left === "TRUE" && tokens[i + 1] === "TRUE" ? "TRUE" : "FALSE"
       );

@@ -113,6 +113,7 @@ function resolveAndOperator(tokens: string[]): string[] {
 }
 
 export function resolveBooleanExpression(input: string): boolean {
+  if (!input) throw new SyntaxError("Empty input");
   const tokens = tokenize(input);
   const withParentesisResolved = resolveParentheses(tokens);
   const withNotResolved = resolveNotOperator(withParentesisResolved);

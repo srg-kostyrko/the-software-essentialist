@@ -65,6 +65,7 @@ describe("boolean calculator", () => {
 
   describe("errors", () => {
     it.each([
+      ["", "Empty input"],
       ["NOT", "Missing operand for NOT operator"],
       ["TRUE AND", "Missing right operand for AND operator"],
       ["AND TRUE", "Missing left operand for AND operator"],

@@ -2,13 +2,19 @@ function resolveLiteral(input: string): boolean {
   return input === "TRUE";
 }
 
+const supportedTokens = new Set(["TRUE", "FALSE", "NOT", "AND", "OR"]);
+
 function tokenize(input: string): string[] {
   const tokens: string[] = [];
   let currentWord: string[] = [];
   for (const char of input) {
     if (char === "(" || char === ")" || char === " ") {
       if (currentWord.length > 0) {
-        tokens.push(currentWord.join(""));
+        const token = currentWord.join("");
+        if (!supportedTokens.has(token)) {
+          throw new SyntaxError(`Unsupported token: ${token}`);
+        }
+        tokens.push(token);
       }
       currentWord = [];
       if (char !== " ") tokens.push(char);
@@ -17,7 +23,11 @@ function tokenize(input: string): string[] {
     }
   }
   if (currentWord.length > 0) {
-    tokens.push(currentWord.join(""));
+    const token = currentWord.join("");
+    if (!supportedTokens.has(token)) {
+      throw new SyntaxError(`Unsupported token: ${token}`);
+    }
+    tokens.push(token);
   }
   return tokens;
 }

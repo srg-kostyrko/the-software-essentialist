@@ -73,6 +73,8 @@ describe("boolean calculator", () => {
       ["OR TRUE", "Missing left operand for OR operator"],
       ["(TRUE", "Missing closing parenthesis"],
       ["TRUE)", "Missing opening parenthesis"],
+      ["2 OR TRUE", "Unsupported token: 2"],
+      ["TRUE OR 2", "Unsupported token: 2"],
     ])("knows that %s throws `%s` error", (expression, error) => {
       expect(() => {
         resolveBooleanExpression(expression);

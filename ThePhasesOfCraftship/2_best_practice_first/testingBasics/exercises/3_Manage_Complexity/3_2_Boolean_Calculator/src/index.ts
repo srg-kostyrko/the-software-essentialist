@@ -52,6 +52,9 @@ function resolveNotOperator(tokens: string[]): string[] {
   const result = [];
   for (let i = 0; i < tokens.length; i++) {
     if (tokens[i] === "NOT") {
+      if (i === tokens.length - 1) {
+        throw new SyntaxError("Unexpected end of expression");
+      }
       result.push(tokens[i + 1] === "TRUE" ? "FALSE" : "TRUE");
       i++;
     } else {
@@ -99,6 +102,6 @@ export function resolveBooleanExpression(input: string): boolean {
   const withNotResolved = resolveNotOperator(withParentesisResolved);
   const withOrResolved = resolveOrOperator(withNotResolved);
   const withAndResolved = resolveAndOperator(withOrResolved);
-  
+
   return resolveLiteral(withAndResolved[0]);
 }

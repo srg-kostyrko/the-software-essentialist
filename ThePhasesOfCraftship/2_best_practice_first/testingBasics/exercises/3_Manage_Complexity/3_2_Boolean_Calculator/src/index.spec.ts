@@ -62,4 +62,12 @@ describe("boolean calculator", () => {
       expect(resolveBooleanExpression(expression)).toBe(result);
     });
   });
+
+  describe("errors", () => {
+    it.each(["NOT"])("knows that %s throws an error", (expression) => {
+      expect(() => {
+        resolveBooleanExpression(expression);
+      }).toThrow("Unexpected end of expression");
+    });
+  });
 });

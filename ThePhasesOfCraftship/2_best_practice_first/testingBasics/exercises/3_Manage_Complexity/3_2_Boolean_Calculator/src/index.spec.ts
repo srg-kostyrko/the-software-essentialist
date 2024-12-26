@@ -64,13 +64,18 @@ describe("boolean calculator", () => {
   });
 
   describe("errors", () => {
-    it.each(["NOT", "TRUE AND", "AND TRUE", "TRUE OR", "OR TRUE", "(TRUE", "TRUE)"])(
-      "knows that %s throws an error",
-      (expression) => {
-        expect(() => {
-          resolveBooleanExpression(expression);
-        }).toThrow("Unexpected end of expression");
-      }
-    );
+    it.each([
+      ["NOT", "Missing operand for NOT operator"],
+      ["TRUE AND", "Missing right operand for AND operator"],
+      ["AND TRUE", "Missing left operand for AND operator"],
+      ["TRUE OR", "Missing right operand for OR operator"],
+      ["OR TRUE", "Missing left operand for OR operator"],
+      ["(TRUE", "Missing closing parenthesis"],
+      ["TRUE)", "Missing opening parenthesis"],
+    ])("knows that %s throws `%s` error", (expression, error) => {
+      expect(() => {
+        resolveBooleanExpression(expression);
+      }).toThrow(error);
+    });
   });
 });

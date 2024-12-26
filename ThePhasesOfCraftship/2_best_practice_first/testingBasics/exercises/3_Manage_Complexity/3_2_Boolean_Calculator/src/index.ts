@@ -31,7 +31,7 @@ function resolveParentheses(tokens: string[]): string[] {
     } else if (token === ")") {
       const lastParens = parens.pop();
       if (!lastParens) {
-        throw new SyntaxError("Unexpected end of expression");
+        throw new SyntaxError("Missing opening parenthesis");
       }
       const resolved = resolveBooleanExpression(lastParens.join(" "));
       const value = resolved ? "TRUE" : "FALSE";
@@ -49,7 +49,7 @@ function resolveParentheses(tokens: string[]): string[] {
     }
   }
   if (parens.length > 0) {
-    throw new SyntaxError("Unexpected end of expression");
+    throw new SyntaxError("Missing closing parenthesis");
   }
   return result;
 }
@@ -59,7 +59,7 @@ function resolveNotOperator(tokens: string[]): string[] {
   for (let i = 0; i < tokens.length; i++) {
     if (tokens[i] === "NOT") {
       if (i === tokens.length - 1) {
-        throw new SyntaxError("Unexpected end of expression");
+        throw new SyntaxError("Missing operand for NOT operator");
       }
       result.push(tokens[i + 1] === "TRUE" ? "FALSE" : "TRUE");
       i++;
@@ -75,8 +75,10 @@ function resolveOrOperator(tokens: string[]): string[] {
   for (let i = 0; i < tokens.length; i++) {
     if (tokens[i] === "OR") {
       const left = result.pop();
-      if (!left || i === tokens.length - 1) {
-        throw new SyntaxError("Unexpected end of expression");
+      if (!left) {
+        throw new SyntaxError("Missing left operand for OR operator");
+      } else if (i === tokens.length - 1) {
+        throw new SyntaxError("Missing right operand for OR operator");
       }
       result.push(
         left === "TRUE" || tokens[i + 1] === "TRUE" ? "TRUE" : "FALSE"
@@ -94,8 +96,10 @@ function resolveAndOperator(tokens: string[]): string[] {
   for (let i = 0; i < tokens.length; i++) {
     if (tokens[i] === "AND") {
       const left = result.pop();
-      if (!left || i === tokens.length - 1) {
-        throw new SyntaxError("Unexpected end of expression");
+      if (!left) {
+        throw new SyntaxError("Missing left operand for AND operator");
+      } else if (i === tokens.length - 1) {
+        throw new SyntaxError("Missing right operand for AND operator");
       }
       result.push(
         left === "TRUE" && tokens[i + 1] === "TRUE" ? "TRUE" : "FALSE"

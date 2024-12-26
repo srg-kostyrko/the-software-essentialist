@@ -29,7 +29,10 @@ function resolveParentheses(tokens: string[]): string[] {
     if (token === "(") {
       parens.push([]);
     } else if (token === ")") {
-      const lastParens = parens.pop() ?? [];
+      const lastParens = parens.pop();
+      if (!lastParens) {
+        throw new SyntaxError("Unexpected end of expression");
+      }
       const resolved = resolveBooleanExpression(lastParens.join(" "));
       const value = resolved ? "TRUE" : "FALSE";
       if (parens.length > 0) {
@@ -44,6 +47,9 @@ function resolveParentheses(tokens: string[]): string[] {
         result.push(token);
       }
     }
+  }
+  if (parens.length > 0) {
+    throw new SyntaxError("Unexpected end of expression");
   }
   return result;
 }

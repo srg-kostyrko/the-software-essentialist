@@ -64,7 +64,7 @@ describe("boolean calculator", () => {
   });
 
   describe("errors", () => {
-    it.each(["NOT", "TRUE AND", "AND TRUE", "TRUE OR", "OR TRUE"])(
+    it.each(["NOT", "TRUE AND", "AND TRUE", "TRUE OR", "OR TRUE", "(TRUE", "TRUE)"])(
       "knows that %s throws an error",
       (expression) => {
         expect(() => {

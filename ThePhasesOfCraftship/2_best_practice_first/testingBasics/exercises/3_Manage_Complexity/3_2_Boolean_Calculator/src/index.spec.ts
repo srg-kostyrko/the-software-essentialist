@@ -51,4 +51,15 @@ describe("boolean calculator", () => {
       expect(resolveBooleanExpression(expression)).toBe(result);
     });
   });
+
+  describe("parenteses", () => {
+    it.each([
+      ["TRUE OR (TRUE AND FALSE)", true],
+      ["NOT (TRUE AND FALSE)", true],
+      ["(TRUE OR FALSE) AND (FALSE OR TRUE)", true],
+      ["NOT (TRUE AND NOT (TRUE OR TRUE))", true],
+    ])("knows that %s resolves to %s", (expression, result) => {
+      expect(resolveBooleanExpression(expression)).toBe(result);
+    });
+  });
 });

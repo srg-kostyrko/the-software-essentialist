@@ -3,14 +3,10 @@ import { CreateStudentDTO } from "./dtos/create-student.dto";
 import { StudentAssignmentDto } from "./dtos/student-assignment.dto";
 import { StudentIdDTO } from "./dtos/student-id.dto";
 import { StudentDto } from "./dtos/student.dto";
-import { StudentAssignmentsRepository } from "./student-assignments.repository";
 import { StudentsRepository } from "./students.repository";
 
 export class StudentsService {
-  constructor(
-    private repository: StudentsRepository,
-    private assignementsRepository: StudentAssignmentsRepository
-  ) {}
+  constructor(private repository: StudentsRepository) {}
 
   async listStudents() {
     const students = await this.repository.getAll();
@@ -30,16 +26,14 @@ export class StudentsService {
   }
 
   async getAssignments(student: StudentDto) {
-    const studentAssignments =
-      await this.assignementsRepository.getStudentAssignments(student.id);
+    const studentAssignments = await this.repository.getAssignments(student.id);
     return studentAssignments.map((assignment) =>
       StudentAssignmentDto.fromModel(assignment)
     );
   }
 
   async getGrades(student: StudentDto) {
-    const studentAssignments =
-      await this.assignementsRepository.getStudentGrades(student.id);
+    const studentAssignments = await this.repository.getGrades(student.id);
     return studentAssignments.map((assignment) =>
       StudentAssignmentDto.fromModel(assignment)
     );

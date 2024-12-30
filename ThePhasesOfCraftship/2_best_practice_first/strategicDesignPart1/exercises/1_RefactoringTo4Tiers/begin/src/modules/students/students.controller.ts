@@ -15,12 +15,12 @@ export class StudentsController extends AppController {
   setupRoutes(): void {
     this.router.get("/", this.createRouteHandler(this.listStudents));
     this.router.post("/", this.createRouteHandler(this.createStudent));
-    this.router.get("/:id", this.createRouteHandler(this.getStudent));
+    this.router.get("/:studentId", this.createRouteHandler(this.getStudent));
     this.router.get(
-      "/:id/assignments",
+      "/:studentId/assignments",
       this.createRouteHandler(this.getAssignments)
     );
-    this.router.get("/:id/grades", this.createRouteHandler(this.getGrades));
+    this.router.get("/:studentId/grades", this.createRouteHandler(this.getGrades));
   }
 
   listStudents = async (
@@ -35,7 +35,7 @@ export class StudentsController extends AppController {
     req: express.Request,
     res: express.Response
   ): Promise<void> => {
-    const studentId = StudentIdDTO.fromRequestParams(req.params);
+    const studentId = StudentIdDTO.fromRequest(req.params);
     const student = await this.service.getStudent(studentId);
     successResponse(res, student);
   };
@@ -53,7 +53,7 @@ export class StudentsController extends AppController {
     req: express.Request,
     res: express.Response
   ): Promise<void> => {
-    const studentId = StudentIdDTO.fromRequestParams(req.params);
+    const studentId = StudentIdDTO.fromRequest(req.params);
     const student = await this.service.getStudent(studentId);
     const assignments = await this.service.getAssignments(student);
     successResponse(res, assignments);
@@ -63,7 +63,7 @@ export class StudentsController extends AppController {
     req: express.Request,
     res: express.Response
   ): Promise<void> => {
-    const studentId = StudentIdDTO.fromRequestParams(req.params);
+    const studentId = StudentIdDTO.fromRequest(req.params);
     const student = await this.service.getStudent(studentId);
     const grades = await this.service.getGrades(student);
     successResponse(res, grades);

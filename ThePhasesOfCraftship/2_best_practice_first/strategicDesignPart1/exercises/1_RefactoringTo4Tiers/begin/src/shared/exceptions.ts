@@ -25,3 +25,15 @@ export class StudentNotFoundException extends Error {
     super("Student not found: " + id);
   }
 }
+
+export class ClassNotFoundException extends Error {
+  constructor(id: string) {
+    super("Class not found: " + id);
+  }
+}
+
+export class DuplicatedClassEnrollmentException extends Error {
+  constructor(classId: string, studentId: string) {
+    super("Class " + classId + " already has student " + studentId);
+  }
+}

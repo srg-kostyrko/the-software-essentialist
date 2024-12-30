@@ -4,17 +4,17 @@ import {
 } from "../../../shared/exceptions";
 import { isUUID } from "../../../shared/misc";
 
-export class StudentIdDTO {
+export class ClassIdDTO {
   constructor(public readonly id: string) {}
 
-  static fromRequest(params: Record<string, string>) {
-    const { studentId } = params;
-    if (!studentId) {
+  static fromRequestParams(params: Record<string, string>) {
+    const { id } = params;
+    if (!id) {
       throw new InvalidRequestParamsException(["id"]);
     }
-    if (!isUUID(studentId)) {
-      throw new InvalidIdException(studentId);
+    if (!isUUID(id)) {
+      throw new InvalidIdException(id);
     }
-    return new StudentIdDTO(studentId);
+    return new ClassIdDTO(id);
   }
 }

@@ -5,7 +5,6 @@ import { successResponse } from "../../shared/response";
 import { ErrorHandler } from "../../infra/error-handler";
 import { StudentIdDTO } from "./dtos/student-id.dto";
 import { CreateStudentDTO } from "./dtos/create-student.dto";
-import { StudentAssignmentsRepository } from "./student-assignments.repository";
 
 export class StudentsController extends AppController {
   constructor(private service: StudentsService, errorHandler: ErrorHandler) {

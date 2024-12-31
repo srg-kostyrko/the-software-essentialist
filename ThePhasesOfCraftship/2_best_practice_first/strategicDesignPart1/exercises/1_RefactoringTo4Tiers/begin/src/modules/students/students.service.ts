@@ -1,6 +1,6 @@
 import { StudentNotFoundException } from "../../shared/exceptions";
 import { CreateStudentDTO } from "./dtos/create-student.dto";
-import { StudentAssignmentDTO } from "./dtos/student-assignment.dto";
+import { StudentAssignmentDTO } from "../assignments/dtos/student-assignment.dto";
 import { StudentIdDTO } from "./dtos/student-id.dto";
 import { StudentDTO } from "./dtos/student.dto";
 import { StudentsRepository } from "./students.repository";

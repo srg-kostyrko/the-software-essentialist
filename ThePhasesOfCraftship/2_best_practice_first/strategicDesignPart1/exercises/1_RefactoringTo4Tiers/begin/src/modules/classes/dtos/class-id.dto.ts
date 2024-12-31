@@ -1,20 +1,18 @@
 import {
   InvalidIdException,
-  InvalidRequestParamsException,
 } from "../../../shared/exceptions";
-import { isUUID } from "../../../shared/misc";
+import { isUUID, validateIncommingObject } from "../../../shared/misc";
 
 export class ClassIdDTO {
   constructor(public readonly id: string) {}
 
-  static fromRequestParams(params: Record<string, string>) {
-    const { id } = params;
-    if (!id) {
-      throw new InvalidRequestParamsException(["id"]);
+  static fromRequest(params: Record<string, string>) {
+    const requiredKeys = ["classId"];
+    validateIncommingObject(params, requiredKeys);
+    const { classId } = params;
+    if (!isUUID(classId)) {
+      throw new InvalidIdException(classId);
     }
-    if (!isUUID(id)) {
-      throw new InvalidIdException(id);
-    }
-    return new ClassIdDTO(id);
+    return new ClassIdDTO(classId);
   }
 }

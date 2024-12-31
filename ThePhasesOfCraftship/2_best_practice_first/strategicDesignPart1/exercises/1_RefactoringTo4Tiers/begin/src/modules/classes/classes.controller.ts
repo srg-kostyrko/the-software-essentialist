@@ -19,9 +19,9 @@ export class ClassesController extends AppController {
   }
   setupRoutes(): void {
     this.router.post("/", this.createRouteHandler(this.createClass));
-    this.router.post("/:id/enrollments", this.createRouteHandler(this.addStudentToClass));
-    this.router.get("/:id/assignments", this.createRouteHandler(this.getClassAssignments));
-    this.router.post("/:id/assignments", this.createRouteHandler(this.createClassAssignment));
+    this.router.post("/:classId/enrollments", this.createRouteHandler(this.addStudentToClass));
+    this.router.get("/:classId/assignments", this.createRouteHandler(this.getClassAssignments));
+    this.router.post("/:classId/assignments", this.createRouteHandler(this.createClassAssignment));
   }
 
   createClass = async (
@@ -37,7 +37,7 @@ export class ClassesController extends AppController {
     req: express.Request,
     res: express.Response
   ): Promise<void> => {
-    const classId = ClassIdDTO.fromRequestParams(req.params);
+    const classId = ClassIdDTO.fromRequest(req.params);
     const klass = await this.service.getClass(classId);
     const dto = AddStudentToClassDTO.fromRequest(req.body);
     const student = await this.studentService.getStudent(dto.studentId);
@@ -49,7 +49,7 @@ export class ClassesController extends AppController {
     req: express.Request,
     res: express.Response
   ): Promise<void> => {
-    const classId = ClassIdDTO.fromRequestParams(req.params);
+    const classId = ClassIdDTO.fromRequest(req.params);
     const klass = await this.service.getClass(classId);
     const assignments = await this.service.getClassAssignments(klass);
     successResponse(res, assignments);
@@ -59,7 +59,7 @@ export class ClassesController extends AppController {
     req: express.Request,
     res: express.Response
   ): Promise<void> => {
-    const classId = ClassIdDTO.fromRequestParams(req.params);
+    const classId = ClassIdDTO.fromRequest(req.params);
     const klass = await this.service.getClass(classId);
     const dto = CreateClassAssignmentDTO.fromRequest(req.body);
     const assignment = await this.service.createClassAssignment(klass, dto);

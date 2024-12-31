@@ -2,9 +2,9 @@ import {
   ClassNotFoundException,
   DuplicatedClassEnrollmentException,
 } from "../../shared/exceptions";
+import { AssignmentDTO } from "../assignments/dtos/assignemnt.dto";
 import { StudentDTO } from "../students/dtos/student.dto";
 import { ClassesRepository } from "./classes.repository";
-import { ClassAssignmentDTO } from "./dtos/assignemnt.dto";
 import { ClassEnrollmentDTO } from "./dtos/class-enrollment.dto";
 import { ClassIdDTO } from "./dtos/class-id.dto";
 import { ClassDTO } from "./dtos/class.dto";
@@ -48,7 +48,7 @@ export class ClassesService {
     const assignments = await this.repository.getAssignments(klass.id);
 
     return assignments.map((assignment) =>
-      ClassAssignmentDTO.fromModel(assignment)
+      AssignmentDTO.fromModel(assignment)
     );
   }
 
@@ -58,6 +58,6 @@ export class ClassesService {
       dto.title
     );
 
-    return ClassAssignmentDTO.fromModel(assignment);
+    return AssignmentDTO.fromModel(assignment);
   }
 }

@@ -1,15 +1,12 @@
 import { InvalidRequestBodyException } from "../../../shared/exceptions";
-import { isMissingKeys } from "../../../shared/misc";
+import { isMissingKeys, validateIncommingObject } from "../../../shared/misc";
 
 export class CreateStudentDTO {
   constructor(public readonly name: string) {}
 
   static fromRequest(body: Record<string, string>) {
     const requiredKeys = ['name'];
-
-    if (!body || typeof body !== 'object' || isMissingKeys(body, requiredKeys)) {
-        throw new InvalidRequestBodyException(requiredKeys);
-    }
+    validateIncommingObject(body, requiredKeys);
 
     return new CreateStudentDTO(body.name);
   }

@@ -7,6 +7,7 @@ import { CreateClassDTO } from "./dtos/create-class.dto";
 import { ClassIdDTO } from "./dtos/class-id.dto";
 import { AddStudentToClassDTO } from "./dtos/add-student-to-class.dto";
 import { StudentsService } from "../students/students.service";
+import { CreateClassAssignmentDto } from "./dtos/create-class-assignment.dto";
 
 export class ClassesController extends AppController {
   constructor(
@@ -20,6 +21,7 @@ export class ClassesController extends AppController {
     this.router.post("/", this.createRouteHandler(this.createClass));
     this.router.post("/:id/enrollments", this.createRouteHandler(this.addStudentToClass));
     this.router.get("/:id/assignments", this.createRouteHandler(this.getClassAssignments));
+    this.router.post("/:id/assignments", this.createRouteHandler(this.createClassAssignment));
   }
 
   createClass = async (
@@ -53,40 +55,14 @@ export class ClassesController extends AppController {
     successResponse(res, assignments);
   };
 
-
-// GET all assignments for class
-// app.get('/classes/:id/assignments', async (req: Request, res: Response) => {
-//     try {
-//         const { id } = req.params;
-//         if(!isUUID(id)) {
-//             return res.status(400).json({ error: Errors.ValidationError, data: undefined, success: false });
-//         }
-
-//         // check if class exists
-//         const cls = await prisma.class.findUnique({
-//             where: {
-//                 id
-//             }
-//         });
-
-//         if (!cls) {
-//             return res.status(404).json({ error: Errors.ClassNotFound, data: undefined, success: false });
-//         }
-
-//         const assignments = await prisma.assignment.findMany({
-//             where: {
-//                 classId: id
-//             },
-//             include: {
-//                 class: true,
-//                 studentTasks: true
-//             }
-//         });
-    
-//         res.status(200).json({ error: undefined, data: parseForResponse(assignments), success: true });
-//     } catch (error) {
-//         res.status(500).json({ error: Errors.ServerError, data: undefined, success: false });
-//     }
-// });
-
+  createClassAssignment = async (
+    req: express.Request,
+    res: express.Response
+  ): Promise<void> => {
+    const classId = ClassIdDTO.fromRequestParams(req.params);
+    const klass = await this.service.getClass(classId);
+    const dto = CreateClassAssignmentDto.fromRequest(req.body);
+    const assignment = await this.service.createClassAssignment(klass, dto);
+    successResponse(res, assignment, 201);
+  };
 }

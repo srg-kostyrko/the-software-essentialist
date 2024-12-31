@@ -32,6 +32,12 @@ export class ClassNotFoundException extends Error {
   }
 }
 
+export class AssignmentNotFoundException extends Error {
+  constructor(id: string) {
+    super("Assignment not found: " + id);
+  }
+}
+
 export class DuplicatedClassEnrollmentException extends Error {
   constructor(classId: string, studentId: string) {
     super("Class " + classId + " already has student " + studentId);

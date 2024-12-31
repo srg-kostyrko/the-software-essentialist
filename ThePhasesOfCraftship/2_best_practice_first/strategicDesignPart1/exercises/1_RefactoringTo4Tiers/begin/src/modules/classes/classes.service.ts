@@ -4,9 +4,11 @@ import {
 } from "../../shared/exceptions";
 import { StudentDto } from "../students/dtos/student.dto";
 import { ClassesRepository } from "./classes.repository";
+import { ClassAssignmentDto } from "./dtos/assignemnt.dto";
 import { ClassEnrollmentDTO } from "./dtos/class-enrollment.dto";
 import { ClassIdDTO } from "./dtos/class-id.dto";
 import { ClassDTO } from "./dtos/class.dto";
+import { CreateClassAssignmentDto } from "./dtos/create-class-assignment.dto";
 import { CreateClassDTO } from "./dtos/create-class.dto";
 
 export class ClassesService {
@@ -43,8 +45,19 @@ export class ClassesService {
   }
 
   async getClassAssignments(klass: ClassDTO) {
-    const assignments = this.repository.getAssignments(klass.id);
+    const assignments = await this.repository.getAssignments(klass.id);
 
-    return assignments; // TODO
+    return assignments.map((assignment) =>
+      ClassAssignmentDto.fromModel(assignment)
+    );
+  }
+
+  async createClassAssignment(klass: ClassDTO, dto: CreateClassAssignmentDto) {
+    const assignment = await this.repository.createAssignment(
+      klass.id,
+      dto.title
+    );
+
+    return ClassAssignmentDto.fromModel(assignment);
   }
 }

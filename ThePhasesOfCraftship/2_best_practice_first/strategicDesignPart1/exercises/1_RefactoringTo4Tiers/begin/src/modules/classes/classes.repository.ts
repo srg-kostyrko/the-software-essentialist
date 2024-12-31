@@ -48,4 +48,13 @@ export class ClassesRepository {
       },
     });
   }
+
+  async createAssignment(classId: string, title: string) {
+    return await this.db.assignment.create({
+      data: {
+        classId,
+        title,
+      },
+    });
+  }
 }

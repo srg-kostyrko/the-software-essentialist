@@ -2,13 +2,13 @@ import {
   ClassNotFoundException,
   DuplicatedClassEnrollmentException,
 } from "../../shared/exceptions";
-import { StudentDto } from "../students/dtos/student.dto";
+import { StudentDTO } from "../students/dtos/student.dto";
 import { ClassesRepository } from "./classes.repository";
-import { ClassAssignmentDto } from "./dtos/assignemnt.dto";
+import { ClassAssignmentDTO } from "./dtos/assignemnt.dto";
 import { ClassEnrollmentDTO } from "./dtos/class-enrollment.dto";
 import { ClassIdDTO } from "./dtos/class-id.dto";
 import { ClassDTO } from "./dtos/class.dto";
-import { CreateClassAssignmentDto } from "./dtos/create-class-assignment.dto";
+import { CreateClassAssignmentDTO } from "./dtos/create-class-assignment.dto";
 import { CreateClassDTO } from "./dtos/create-class.dto";
 
 export class ClassesService {
@@ -26,7 +26,7 @@ export class ClassesService {
     return ClassDTO.fromModel(klass);
   }
 
-  async addStudentToClass(klass: ClassDTO, student: StudentDto) {
+  async addStudentToClass(klass: ClassDTO, student: StudentDTO) {
     const duplicatedClassEnrollment = await this.repository.getEnrollments(
       klass.id,
       student.id
@@ -48,16 +48,16 @@ export class ClassesService {
     const assignments = await this.repository.getAssignments(klass.id);
 
     return assignments.map((assignment) =>
-      ClassAssignmentDto.fromModel(assignment)
+      ClassAssignmentDTO.fromModel(assignment)
     );
   }
 
-  async createClassAssignment(klass: ClassDTO, dto: CreateClassAssignmentDto) {
+  async createClassAssignment(klass: ClassDTO, dto: CreateClassAssignmentDTO) {
     const assignment = await this.repository.createAssignment(
       klass.id,
       dto.title
     );
 
-    return ClassAssignmentDto.fromModel(assignment);
+    return ClassAssignmentDTO.fromModel(assignment);
   }
 }

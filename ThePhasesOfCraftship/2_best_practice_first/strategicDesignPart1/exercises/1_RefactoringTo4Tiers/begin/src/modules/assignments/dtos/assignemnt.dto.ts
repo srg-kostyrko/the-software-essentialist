@@ -1,6 +1,6 @@
 import { Assignment, Class, StudentAssignment } from "@prisma/client";
 
-export class AssignmentDto {
+export class AssignmentDTO {
   constructor(
     public readonly id: string,
     public readonly title: string,
@@ -15,7 +15,7 @@ export class AssignmentDto {
       studentTasks?: StudentAssignment[];
     }
   ) {
-    return new AssignmentDto(
+    return new AssignmentDTO(
       model.id,
       model.title,
       model.classId,

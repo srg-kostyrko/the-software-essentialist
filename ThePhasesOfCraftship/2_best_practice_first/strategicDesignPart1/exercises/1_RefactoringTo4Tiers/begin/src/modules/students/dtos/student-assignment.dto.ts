@@ -1,6 +1,6 @@
 import { StudentAssignment } from "@prisma/client";
 
-export class StudentAssignmentDto {
+export class StudentAssignmentDTO {
   constructor(
     public readonly id: string,
     public readonly studentId: string,
@@ -9,7 +9,7 @@ export class StudentAssignmentDto {
   ) {}
 
   static fromModel(studentAssignment: StudentAssignment) {
-    return new StudentAssignmentDto(
+    return new StudentAssignmentDTO(
       studentAssignment.id,
       studentAssignment.studentId,
       studentAssignment.assignmentId,

@@ -1,7 +1,7 @@
 import { InvalidRequestBodyException } from "../../../shared/exceptions";
 import { isMissingKeys } from "../../../shared/misc";
 
-export class GradeAssignmentDto {
+export class GradeAssignmentDTO {
   constructor(public readonly grade: string) {}
 
   static fromRequest(body: Record<string, string>) {
@@ -17,6 +17,6 @@ export class GradeAssignmentDto {
     if (!["A", "B", "C", "D"].includes(grade)) {
       throw new InvalidRequestBodyException(requiredKeys);
     }
-    return new GradeAssignmentDto(body.grade);
+    return new GradeAssignmentDTO(body.grade);
   }
 }

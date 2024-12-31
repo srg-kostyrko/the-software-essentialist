@@ -1,8 +1,8 @@
 import { StudentNotFoundException } from "../../shared/exceptions";
 import { CreateStudentDTO } from "./dtos/create-student.dto";
-import { StudentAssignmentDto } from "./dtos/student-assignment.dto";
+import { StudentAssignmentDTO } from "./dtos/student-assignment.dto";
 import { StudentIdDTO } from "./dtos/student-id.dto";
-import { StudentDto } from "./dtos/student.dto";
+import { StudentDTO } from "./dtos/student.dto";
 import { StudentsRepository } from "./students.repository";
 
 export class StudentsService {
@@ -10,32 +10,32 @@ export class StudentsService {
 
   async listStudents() {
     const students = await this.repository.getAll();
-    return students.map((student) => StudentDto.fromModel(student));
+    return students.map((student) => StudentDTO.fromModel(student));
   }
 
   async getStudent(dto: StudentIdDTO) {
     const student = await this.repository.getOne(dto.id);
     if (!student)
       throw new StudentNotFoundException(`Student with id ${dto.id} not found`);
-    return StudentDto.fromModel(student);
+    return StudentDTO.fromModel(student);
   }
 
   async createStudent(student: CreateStudentDTO) {
     const stutent = await this.repository.create(student.name);
-    return StudentDto.fromModel(stutent);
+    return StudentDTO.fromModel(stutent);
   }
 
-  async getAssignments(student: StudentDto) {
+  async getAssignments(student: StudentDTO) {
     const studentAssignments = await this.repository.getAssignments(student.id);
     return studentAssignments.map((assignment) =>
-      StudentAssignmentDto.fromModel(assignment)
+      StudentAssignmentDTO.fromModel(assignment)
     );
   }
 
-  async getGrades(student: StudentDto) {
+  async getGrades(student: StudentDTO) {
     const studentAssignments = await this.repository.getGrades(student.id);
     return studentAssignments.map((assignment) =>
-      StudentAssignmentDto.fromModel(assignment)
+      StudentAssignmentDTO.fromModel(assignment)
     );
   }
 }

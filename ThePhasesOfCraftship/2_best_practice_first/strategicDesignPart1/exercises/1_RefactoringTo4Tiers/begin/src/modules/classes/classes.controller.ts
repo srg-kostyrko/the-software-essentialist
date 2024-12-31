@@ -7,7 +7,7 @@ import { CreateClassDTO } from "./dtos/create-class.dto";
 import { ClassIdDTO } from "./dtos/class-id.dto";
 import { AddStudentToClassDTO } from "./dtos/add-student-to-class.dto";
 import { StudentsService } from "../students/students.service";
-import { CreateClassAssignmentDto } from "./dtos/create-class-assignment.dto";
+import { CreateClassAssignmentDTO } from "./dtos/create-class-assignment.dto";
 
 export class ClassesController extends AppController {
   constructor(
@@ -61,7 +61,7 @@ export class ClassesController extends AppController {
   ): Promise<void> => {
     const classId = ClassIdDTO.fromRequestParams(req.params);
     const klass = await this.service.getClass(classId);
-    const dto = CreateClassAssignmentDto.fromRequest(req.body);
+    const dto = CreateClassAssignmentDTO.fromRequest(req.body);
     const assignment = await this.service.createClassAssignment(klass, dto);
     successResponse(res, assignment, 201);
   };

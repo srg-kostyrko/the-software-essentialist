@@ -5,7 +5,7 @@ import {
   StudentAssignment,
 } from "@prisma/client";
 
-export class StudentDto {
+export class StudentDTO {
   constructor(public readonly id: string, public readonly name: string) {}
 
   static fromModel(
@@ -15,7 +15,7 @@ export class StudentDto {
       reportCards?: ReportCard[];
     }
   ) {
-    return new StudentDto(
+    return new StudentDTO(
       student.id,
       student.name
       // classes: student.classes,

@@ -1,7 +1,7 @@
 import { InvalidRequestBodyException } from "../../../shared/exceptions";
 import { isMissingKeys } from "../../../shared/misc";
 
-export class CreateClassAssignmentDto {
+export class CreateClassAssignmentDTO {
   constructor(public readonly title: string) {}
 
   static fromRequest(body: Record<string, string>) {
@@ -15,6 +15,6 @@ export class CreateClassAssignmentDto {
       throw new InvalidRequestBodyException(requiredKeys);
     }
 
-    return new CreateClassAssignmentDto(body.title);
+    return new CreateClassAssignmentDTO(body.title);
   }
 }

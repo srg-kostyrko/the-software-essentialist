@@ -4,7 +4,7 @@ import { ErrorHandler } from "../../infra/error-handler";
 import { AssignemntsService } from "./assignments.service";
 import { AssignmentIdDTO } from "./dtos/assignment-id.dto";
 import { successResponse } from "../../shared/response";
-import { GradeAssignmentDto } from "./dtos/grade-assignment.dto";
+import { GradeAssignmentDTO } from "./dtos/grade-assignment.dto";
 import { StudentIdDTO } from "../students/dtos/student-id.dto";
 
 export class AssignmentsController extends AppController {
@@ -38,7 +38,7 @@ export class AssignmentsController extends AppController {
 
   gradeAssignment = async (req: express.Request, res: express.Response) => {
     const assignemntId = AssignmentIdDTO.fromRequest(req.params);
-    const dto = GradeAssignmentDto.fromRequest(req.body);
+    const dto = GradeAssignmentDTO.fromRequest(req.body);
     const assignemnt = await this.service.getStudetAssignment(assignemntId);
     const updated = await this.service.gradeAssignment(assignemnt, dto);
     successResponse(res, updated);

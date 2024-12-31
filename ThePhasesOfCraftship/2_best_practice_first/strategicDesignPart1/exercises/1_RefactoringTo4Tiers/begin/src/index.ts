@@ -1,11 +1,4 @@
-import express from 'express';
-const cors = require('cors');
-const app = express();
-app.use(express.json());
-app.use(cors());
+import server from "./bootstrap";
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
-const port = process.env.PORT || 3000;
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+server.strart(port);
